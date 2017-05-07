@@ -1,5 +1,12 @@
 <?php
 include 'header.php';
+
+?>
+
+<?php
+if (isset($_SESSION['logado'])) {
+	 header('Location: home.php');
+}
 ?>
 
 <section class="home container" id="home">
@@ -14,27 +21,30 @@ include 'header.php';
 			<div class="loginTitle">
 				Bem Vindo!
 			</div>
-			<div class="formLogin">
-				<!-- <input type="text" class="form-control" id="username" placeholder="Nome de Usuário">
-				<input type="password" class="form-control" id="password" placeholder="Senha"> -->
-				<div class="form-group">
-					<div class="input-group">
-						<div class="input-group-addon">
-							<i class="fa fa-user-o" aria-hidden="true"></i>
+			
+			<form action="login.php" method="POST">
+				<div class="formLogin">
+					<!-- <input type="text" class="form-control" id="username" placeholder="Nome de Usuário">
+					<input type="password" class="form-control" id="password" placeholder="Senha"> -->
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="fa fa-user-o" aria-hidden="true"></i>
+							</div>
+							<input type="text" class="form-control" id="username" name="usuario" placeholder="Nome de usuário" ng-model="username">
 						</div>
-						<input type="text" class="form-control" id="username" placeholder="Nome de usuário" ng-model="username">
 					</div>
-				</div>
-				<div class="form-group">
-					<div class="input-group">
-						<div class="input-group-addon">
-							<i class="fa fa-lock" aria-hidden="true"></i>
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="fa fa-lock" aria-hidden="true"></i>
+							</div>
+							<input type="password" class="form-control" id="password" name="senha" placeholder="Senha" ng-model="password">
 						</div>
-						<input type="password" class="form-control" id="password" placeholder="Senha" ng-model="password">
 					</div>
+					<button type="submit" class="btn btn-lg">Entrar</button>
 				</div>
-				<button type="button" class="btn btn-lg" onclick="location.href = 'home.php';">Entrar</button>
-			</div>
+			</form>
 		</div>
 	</div>
 </section>

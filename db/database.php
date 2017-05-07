@@ -58,7 +58,7 @@ function db_select($query) {
 // exemplo: $name = db_quote($_POST['username']);
 function db_quote($value) {
     $connection = db_connect();
-    return "'" . mysqli_real_escape_string($connection, $value) . "'";
+    return mysqli_real_escape_string($connection, $value);
 }
 
 ?>
