@@ -1,3 +1,7 @@
+<?php
+require_once 'sessao.php';
+?>
+
 <!DOCTYPE html>
 <html ng-app>
 <head>
@@ -13,14 +17,32 @@
 </head>
 
 <body>
-<!-- <div id="mySidenav" class="sidenav">
+
+<?php
+if (isset($_SESSION['logado'])) {
+?>
+
+<div id="mySidenav" class="sidenav">	
 	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-	<a href="#">Empresa</a>
-	<a href="#">Produtos</a>
-	<a href="#">Meio Ambiente</a>
-	<a href="#">Contato</a>
-	<a href="#">Trabalhe Conosco</a>
-</div> -->
+	<?php
+	if ($_SESSION['tipo'] == 1) {
+	?>	
+		<a href="cadastrarmaterial.php">Cadastrar Material</a>
+		<a href="#">Consultar Estoque</a>
+		<a href="#">Requisição de Material</a>
+		<a href="logout.php">Sair</a>		
+	<?php
+	} else if ($_SESSION['tipo'] == 2) { 
+	?>
+		<a href="#">Acessar Requisições</a>
+		<a href="#">Reinserir Sobras</a>
+		<a href="#">Consultar Estoque</a>
+		<a href="logout.php">Sair</a>		
+	<?php
+	}
+}
+?>
+</div> 
 <div id="main">
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -28,8 +50,19 @@
 			<div class="col-xs-1 menu-icon">
 				<a class="navbar-menu" href="#home">
 					<span class="menu-icon"  onclick="openNav()">
-						<!-- &#9776; -->
-						<i class="fa fa-lock" aria-hidden="true"></i>
+						<!-- &#9776; -->						
+						<?php
+						if (!isset($_SESSION['logado'])) {
+						?>
+							<i class="fa fa-lock" aria-hidden="true"></i>						
+						<?php
+						} else {
+						?>
+							<i class="fa fa-bars" aria-hidden="true"></i>
+						<?php
+						}
+						?>
+						
 					</span>
 				</a>
 			</div>

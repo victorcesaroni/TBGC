@@ -2,6 +2,12 @@
 include 'header.php';
 ?>
 
+<?php
+if (!isset($_SESSION['logado'])) {
+	 header('Location: index.php');
+}
+?>
+
 <section class="home container" id="home">
   <!-- <div class="row">
       <div class="col-xs-8 col-xs-offset-2 title" >
@@ -12,7 +18,12 @@ include 'header.php';
 
   <div class="row">
       <div class="col-sm-6 col-sm-offset-3">
-          <img src="https://cdn-az.allevents.in/banners/075027ab431478b7898c294eff3b18e8" alt="">
+        <h1>
+			<?php
+				$tipo = get_usuario_tipo_string($_SESSION['tipo']);
+				echo "Seja bem vindo, $tipo.<br>";
+			?>
+        </h1>
       </div>
   </div>
   <div class="row">
