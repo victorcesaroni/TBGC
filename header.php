@@ -27,7 +27,7 @@ if (isset($_SESSION['logado'])) {
 	<?php
 	if ($_SESSION['tipo'] == 1) {
 	?>	
-		<a href="cadastrarmaterial.php">Cadastrar Material</a>
+		<a href="#">Cadastrar Material</a>
 		<a href="#">Consultar Estoque</a>
 		<a href="#">Requisição de Material</a>
 		<a href="logout.php">Sair</a>		

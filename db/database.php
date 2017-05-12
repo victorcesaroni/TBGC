@@ -54,6 +54,11 @@ function db_select($query) {
     return $rows;
 }
 
+function db_insert_id() {
+    $connection = db_connect();
+    return mysqli_insert_id($connection);
+}
+
 // funcao responsavel por filtrar a entrada vinda de usuarios para evitar sql injection
 // exemplo: $name = db_quote($_POST['username']);
 function db_quote($value) {
