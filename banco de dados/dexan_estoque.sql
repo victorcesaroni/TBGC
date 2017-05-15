@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 12-Maio-2017 às 23:02
+-- Generation Time: 15-Maio-2017 às 21:30
 -- Versão do servidor: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -35,6 +35,15 @@ CREATE TABLE `chapas` (
   `largura` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Extraindo dados da tabela `chapas`
+--
+
+INSERT INTO `chapas` (`cod_material`, `cod_tipo_onda`, `cod_tipo_papelao`, `gramatura`, `comprimento`, `largura`) VALUES
+(5, 1, 1, 10, 9, 1),
+(6, 1, 1, 10, 10, 1),
+(11, 1, 1, 10, 30, 30);
+
 -- --------------------------------------------------------
 
 --
@@ -45,6 +54,39 @@ CREATE TABLE `materiais` (
   `cod` int(11) NOT NULL,
   `quantidade` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `materiais`
+--
+
+INSERT INTO `materiais` (`cod`, `quantidade`) VALUES
+(5, 1),
+(6, 1),
+(7, 25),
+(8, 1),
+(9, 10),
+(10, 1),
+(11, 30);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `materiais_secundarios`
+--
+
+CREATE TABLE `materiais_secundarios` (
+  `cod_material` int(11) NOT NULL,
+  `descricao` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `materiais_secundarios`
+--
+
+INSERT INTO `materiais_secundarios` (`cod_material`, `descricao`) VALUES
+(8, 'TESTE AGORA VAI PORRA'),
+(9, 'Produto do Luan'),
+(10, 'A');
 
 -- --------------------------------------------------------
 
@@ -130,6 +172,12 @@ ALTER TABLE `materiais`
   ADD PRIMARY KEY (`cod`);
 
 --
+-- Indexes for table `materiais_secundarios`
+--
+ALTER TABLE `materiais_secundarios`
+  ADD KEY `cod_material` (`cod_material`);
+
+--
 -- Indexes for table `tipos_onda`
 --
 ALTER TABLE `tipos_onda`
@@ -155,17 +203,17 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `materiais`
 --
 ALTER TABLE `materiais`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `tipos_onda`
 --
 ALTER TABLE `tipos_onda`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `tipos_papelao`
 --
 ALTER TABLE `tipos_papelao`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `usuarios`
 --
@@ -182,6 +230,12 @@ ALTER TABLE `chapas`
   ADD CONSTRAINT `fk_cod_material` FOREIGN KEY (`cod_material`) REFERENCES `materiais` (`cod`),
   ADD CONSTRAINT `fk_cod_tipo_onda` FOREIGN KEY (`cod_tipo_onda`) REFERENCES `tipos_onda` (`cod`),
   ADD CONSTRAINT `fk_cod_tipo_papelao` FOREIGN KEY (`cod_tipo_papelao`) REFERENCES `tipos_papelao` (`cod`);
+
+--
+-- Limitadores para a tabela `materiais_secundarios`
+--
+ALTER TABLE `materiais_secundarios`
+  ADD CONSTRAINT `fk_cod_material_matsec` FOREIGN KEY (`cod_material`) REFERENCES `materiais` (`cod`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

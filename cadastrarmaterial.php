@@ -1,7 +1,5 @@
 <?php
-
-require_once 'db/database.php';
-require_once 'sessao.php';
+include 'header.php';
 
 function print_tipos_papelao() {
     $rows = db_select("SELECT cod,tipo FROM tipos_papelao");
@@ -25,174 +23,127 @@ function print_tipos_onda() {
     }
 }
 
-function validar_tipo_onda($input) {
-    if (empty($input) || is_null($input))
-        return false;
-
-    if (!is_numeric($input))
-        return false;
-
-    $input = db_quote($input);    
-    $rows = db_select("SELECT cod FROM tipos_onda WHERE cod = '$input'");
-
-    if ($rows == false)
-        return false;
-    
-    return true;
-}
-
-function validar_gramatura($input) {
-    if (empty($input) || is_null($input))
-        return false;
-
-    if (!is_numeric($input) || $input <= 0)
-        return false;
-
-    return true;
-}
-
-function validar_tipo_papelao($input) {
-    if (empty($input) || is_null($input))
-        return false;
-
-    if (!is_numeric($input))
-        return false;
-    
-    $input = db_quote($input);
-    $rows = db_select("SELECT cod FROM tipos_papelao WHERE cod = '$input'");
-
-    if ($rows == false)
-        return false;
-
-    return true;
-}
-
-function validar_comprimento($input) {
-    if (empty($input) || is_null($input))
-        return false;
-
-    if (!is_numeric($input) || $input <= 0)
-        return false;
-    
-    return true;
-}
-
-function validar_largura($input) {
-   if (empty($input) || is_null($input))
-        return false;
-
-    if (!is_numeric($input) || $input <= 0)
-        return false;
-    
-    return true;
-}
-
-function validar_quantidade($input) {
-   if (empty($input) || is_null($input))
-        return false;
-
-    if (!is_numeric($input) || $input <= 0)
-        return false;
-    
-    return true;
-}
-
-function inserir_chapa($cod_tipo_papelao, $cod_tipo_onda, $gramatura, $comprimento, $largura, $quantidade) {
-    $rows = db_select("SELECT cod_material FROM chapas WHERE cod_tipo_onda='$cod_tipo_onda' AND cod_tipo_papelao='$cod_tipo_papelao' AND gramatura=$gramatura AND comprimento=$comprimento AND largura=$largura");
-
-    if ($rows == false) {
-        // não existe uma chapa igual cadastrada
-        
-        db_query("BEGIN");
-        db_query("INSERT INTO materiais (quantidade) VALUES ($quantidade)");
-        $cod_material = db_insert_id();
-        db_query("INSERT INTO chapas (cod_material,cod_tipo_papelao,cod_tipo_onda,gramatura,comprimento,largura) VALUES ($cod_material,$cod_tipo_papelao,$cod_tipo_onda,$gramatura,$comprimento,$largura)");
-        db_query("COMMIT");
-
-    } else {
-        // já existe uma chapa igual cadastrada
-
-        db_query("BEGIN");
-        $cod_material = $rows[0]['cod_material'];        
-        db_query("UPDATE materiais SET quantidade=(quantidade + $quantidade) WHERE cod=$cod_material");
-        db_query("COMMIT");
-    }
-}
-
 ?>
 
-<html>
-<body>
-    <?php
-        $rows = db_select("SELECT * FROM materiais");
+<script src="js/cadastrarmaterial.js"></script>
 
-        foreach ($rows as $row) {
-            echo "$row[cod] - $row[quantidade]<br>";
-        }        
-    ?>
+<section class="home container" id="home">
+<!-- <div class="row">
+    <div class="col-xs-8 col-xs-offset-2 title" >
+          <h3>Tenha o <span class="blue">controle</span> absoluto de seus dependentes</h3>
+          <h4>Com Zalt Card você determina <span class="blue"> quanto </span>e <span class="blue">onde</span> eles podem gastar</h4>
+    </div>
+</div> -->
 
-    <form action="cadastrarmaterial.php" method="POST">
-        Tipo papelão: <select name="tipo_papelao"><?php print_tipos_papelao(); ?> </select><br>
-        Tipo onda: <select name="tipo_onda"><?php print_tipos_onda(); ?> </select><br>
-        Gramatura [g/m²]: <input type="text" name="gramatura"><br>
-        Comprimento [m]: <input type="text" name="comprimento"><br>
-        Largura [m]: <input type="text" name="largura"><br>
-        Quantidade: <input type="text" name="quantidade"><br>
-        <input type="submit" name="cadastrar" value="cadastrar"><br>  
-    </form>
-</body>
-</html>
+<div class="row">
+	<div class="col-sm-6 col-sm-offset-3">
+		<h2>Cadastrar Material</h2>
+	</div>
+</div>
 
+<div class="row">
+	<div class="col-sm-8 col-sm-offset-2">
+		<form action="webservice/cadastrarmaterial.php" method="POST" class="boxCadastro">			
+			<br>
+			<div class="row">
+				<div class="col-sm-3 col-sm-offset-1">
+					<b>Informações Gerais</b>
+				</div>
+			</div>
+			<br>
+
+			<div class="row">
+				<div class="col-sm-10 col-sm-offset-1">
+					Material
+					<select name="tipo_material" class="form-control" id="tipoMaterial">
+						<option value="chapa">Chapa de papelão</option>
+						<option value="secundario">Secundário</option>
+					</select>
+				</div>
+			</div>
+		
+			<div id="formChapa">
+				<div class="row">
+					<div class="col-sm-3 col-sm-offset-1">
+						Quantidade
+						<input type="text" name="quantidade" class="form-control" placeholder="">
+					</div>
+
+					<div class="col-sm-4 ">
+						Tipo papelão: 
+						<select class="form-control" name="tipo_papelao"><?php print_tipos_papelao(); ?> </select><br>
+					</div>
+				
+					<div class="col-sm-3 ">
+						Tipo onda: 
+						<select class="form-control" name="tipo_onda"><?php print_tipos_onda(); ?> </select><br>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-sm-3 col-sm-offset-1">
+						Gramatura [g/m²]: 
+						<input type="text" class="form-control" name="gramatura"><br>
+					</div>
+
+					<div class="col-sm-4 ">
+						Comprimento [m]: 
+						<input type="text" class="form-control" name="comprimento"><br>
+					</div>
+
+					<div class="col-sm-3 ">
+						Largura [m]: 
+						<input type="text" class="form-control" name="largura"><br>
+					</div>
+				</div>
+			</div>
+
+			<div id="formMaterialSecundario">
+				<div class="row">
+					<div class="col-sm-3 col-sm-offset-1">
+						Quantidade
+						<input type="text" name="quantidade2" class="form-control" placeholder="">
+					</div>
+
+					<div class="col-sm-4 ">
+						Desscrição: 
+						<input type="text" class="form-control" name="descricao"><br>
+					</div>				
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-10 col-sm-offset-1">
+					<button type="submit" name="cadastrar" class="btn btn-cadastrarMaterial">Cadastrar</button>	
+				</div>
+			</div>
+
+			<br>
+			<div class="row">
+				<div class="col-sm-10 col-sm-offset-1">
+					<div class="modal fade" id="modalCadastroDialog">
+						<div class="modal-dialog">
+							<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+								<h4 class="modal-title">Informação</h4>
+							</div>
+							<div class="modal-body">
+								<p><div id="modalCadastroMessage"></div></p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->					
+				</div>
+			</div>
+		<form>
+	</div>
+</div>
+
+ </section>
 <?php
-
-if (isset($_POST['cadastrar'])) {
-    $validado = true;
-    $erro = "";
-
-    if (!(isset($_POST['tipo_onda']) && validar_tipo_onda($_POST['tipo_onda']))) {
-        $validado = false;
-        $erro .= "Tipo de onda inválido!<br>";
-    }
-
-    if (!(isset($_POST['gramatura']) && validar_gramatura($_POST['gramatura']))) {
-        $validado = false;
-        $erro .= "Gramatura inválida!<br>";
-    }
-
-    if (!(isset($_POST['tipo_papelao']) && validar_tipo_papelao($_POST['tipo_papelao']))) {
-        $validado = false;
-        $erro .= "Tipo de papelão inválido!<br>";
-    }
-
-    if (!(isset($_POST['comprimento']) && validar_comprimento($_POST['comprimento']))) {
-        $validado = false;
-        $erro .= "Comprimento inválido!<br>";
-    }
-
-    if (!(isset($_POST['largura']) && validar_largura($_POST['largura']))) {
-        $validado = false;
-        $erro .= "Largura inválida!<br>";
-    }
-
-    if (!(isset($_POST['quantidade']) && validar_quantidade($_POST['quantidade']))) {
-        $validado = false;
-        $erro .= "Quantidade inválida!<br>";
-    }
-    
-    if ($validado == false) {
-        echo $erro;
-    } else {
-        echo "OK";
-
-        $cod_tipo_papelao = $_POST['tipo_papelao'];
-        $cod_tipo_onda = $_POST['tipo_onda'];
-        $gramatura = $_POST['gramatura'];
-        $largura = $_POST['largura'];
-        $comprimento = $_POST['comprimento'];
-        $quantidade = $_POST['quantidade'];
-        
-        inserir_chapa($cod_tipo_papelao, $cod_tipo_onda, $gramatura, $comprimento, $largura, $quantidade);
-    }
-}
-
+include 'footer.php';
 ?>

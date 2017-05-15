@@ -9,6 +9,8 @@ if (isset($_SESSION['logado'])) {
 }
 ?>
 
+<script src="js/login.js"></script>
+
 <section class="home container" id="home">
 	<!-- <div class="row">
 		<div class="col-xs-8 col-xs-offset-2 title" >
@@ -22,28 +24,28 @@ if (isset($_SESSION['logado'])) {
 				Bem Vindo!
 			</div>
 			
-			<form action="login.php" method="POST">
-				<div class="formLogin">
-					<!-- <input type="text" class="form-control" id="username" placeholder="Nome de Usuário">
-					<input type="password" class="form-control" id="password" placeholder="Senha"> -->
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-addon">
-								<i class="fa fa-user-o" aria-hidden="true"></i>
-							</div>
-							<input type="text" class="form-control" id="username" name="usuario" placeholder="Nome de usuário" ng-model="username">
+			<form action="webservice/login.php" method="POST" class="formLogin">
+				<div id="formLoginMessage">					
+				</div>		
+				<!-- <input type="text" class="form-control" id="username" placeholder="Nome de Usuário">
+				<input type="password" class="form-control" id="password" placeholder="Senha"> -->
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-user-o" aria-hidden="true"></i>
 						</div>
+						<input type="text" class="form-control" id="username" name="usuario" placeholder="Nome de usuário" ng-model="username">
 					</div>
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-addon">
-								<i class="fa fa-lock" aria-hidden="true"></i>
-							</div>
-							<input type="password" class="form-control" id="password" name="senha" placeholder="Senha" ng-model="password">
-						</div>
-					</div>
-					<button type="submit" class="btn btn-lg">Entrar</button>
 				</div>
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</div>
+						<input type="password" class="form-control" id="password" name="senha" placeholder="Senha" ng-model="password">
+					</div>
+				</div>
+				<button type="submit" class="btn btn-lg">Entrar</button>			
 			</form>
 		</div>
 	</div>

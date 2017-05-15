@@ -1,6 +1,6 @@
 <?php
 
-require_once 'db/database.php';
+require_once dirname(__FILE__) . '/includes.php';
 
 session_start();
 

@@ -1,14 +1,15 @@
 <?php
-require_once 'sessao.php';
+require_once './includes.php';
 ?>
 
 <!DOCTYPE html>
 <html ng-app>
 <head>
-	<script src="http://code.angularjs.org/1.0.1/angular-1.0.1.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 	<meta charset="utf-8">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,14 +31,14 @@ if (isset($_SESSION['logado'])) {
 		<a href="#">Cadastrar Material</a>
 		<a href="#">Consultar Estoque</a>
 		<a href="#">Requisição de Material</a>
-		<a href="logout.php">Sair</a>		
+		<a href="webservice/logout.php">Sair</a>		
 	<?php
 	} else if ($_SESSION['tipo'] == 2) { 
 	?>
 		<a href="#">Acessar Requisições</a>
 		<a href="#">Reinserir Sobras</a>
 		<a href="#">Consultar Estoque</a>
-		<a href="logout.php">Sair</a>		
+		<a href="webservice/logout.php">Sair</a>		
 	<?php
 	}
 }
