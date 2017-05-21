@@ -1,37 +1,13 @@
 <?php
 include 'header.php';
-
-function print_tipos_papelao() {
-    $rows = db_select("SELECT cod,tipo FROM tipos_papelao");
-
-    if ($rows == false)
-        return;
-
-    foreach ($rows as $row) {
-        echo "<option value=\"$row[cod]\">$row[tipo]</option>";
-    }
-}
-
-function print_tipos_onda() {
-    $rows = db_select("SELECT cod,tipo FROM tipos_onda");
-
-    if ($rows == false)
-        return;
-
-    foreach ($rows as $row) {
-        echo "<option value=\"$row[cod]\">$row[tipo]</option>";
-    }
-}
-
 ?>
 
-<script src="js/cadastrarmaterial.js"></script>
 
 <section class="home container" id="home">
 
 <div class="row">
 	<div class="col-sm-6 col-sm-offset-3">
-		<h2>Cadastrar Material</h2>
+		<h2>Editar Material</h2>
 	</div>
 </div>
 
@@ -56,7 +32,7 @@ function print_tipos_onda() {
 				</div>
 			</div>
 
-			<div id="formChapa">
+
 				<div class="row">
 					<div class="col-sm-3 col-sm-offset-1">
 						Quantidade
@@ -65,12 +41,12 @@ function print_tipos_onda() {
 
 					<div class="col-sm-4 ">
 						Tipo papelão:
-						<select class="form-control" name="tipo_papelao"><?php print_tipos_papelao(); ?> </select><br>
+						<select class="form-control" name="tipo_papelao"></select><br>
 					</div>
 
 					<div class="col-sm-3 ">
 						Tipo onda:
-						<select class="form-control" name="tipo_onda"><?php print_tipos_onda(); ?> </select><br>
+						<select class="form-control" name="tipo_onda"></select><br>
 					</div>
 				</div>
 
@@ -90,25 +66,26 @@ function print_tipos_onda() {
 						<input type="text" class="form-control" name="largura"><br>
 					</div>
 				</div>
-			</div>
 
-			<div id="formMaterialSecundario">
-				<div class="row">
-					<div class="col-sm-3 col-sm-offset-1">
-						Quantidade
-						<input type="text" name="quantidade2" class="form-control" placeholder="">
-					</div>
+                <!-- <div id="formMaterialSecundario">
+    				<div class="row">
+    					<div class="col-sm-3 col-sm-offset-1">
+    						Quantidade
+    						<input type="text" name="quantidade2" class="form-control" placeholder="">
+    					</div>
 
-					<div class="col-sm-4 ">
-						Desscrição:
-						<input type="text" class="form-control" name="descricao"><br>
-					</div>
-				</div>
-			</div>
+    					<div class="col-sm-4 ">
+    						Descrição:
+    						<input type="text" class="form-control" name="descricao"><br>
+    					</div>
+    				</div>
+    			</div> -->
+
+
 
 			<div class="row">
 				<div class="col-sm-10 col-sm-offset-1">
-					<button type="submit" name="cadastrar" class="btn btn-cadastrarMaterial">Cadastrar</button>
+					<button type="submit" name="cadastrar" class="btn btn-cadastrarMaterial">Atualizar</button>
 				</div>
 			</div>
 

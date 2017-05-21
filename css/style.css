@@ -84,7 +84,7 @@ body{
 }
 
 .col-sm-1{
-  border: 1px solid black;
+  /*border: 1px solid black;*/
 
 }
 
@@ -263,6 +263,8 @@ footer i{
   height: 600px;
   border: 1px solid #1A4275;
   border-radius: 10px;
+  padding: 2%;
+
 }
 
 .btn-cadastrarMaterial{
@@ -272,4 +274,38 @@ footer i{
   height: 40px;
   position: absolute bottom;
 
+}
+
+.listaEstoque{
+    width: 625px;
+    margin-top: 20px;
+    max-height: 450px;
+    overflow-y:auto;
+}
+
+.tipoMaterial div{
+    text-align: center;
+    border-right: 1px solid #1A4275;
+    padding: 2%;
+}
+
+.tipoMaterial div.tipoMaterialLast{
+    border: 0;
+    padding: 2%;
+}
+
+
+li.list-group-item{
+    padding: 0 2%;
+}
+
+.cabecalhoEstoque{
+    text-align: center;
+    width: 595px;
+    margin: 0;
+
+}
+.cabecalhoEstoque div{
+    font-weight: bold;
+    padding: 0;
 }
