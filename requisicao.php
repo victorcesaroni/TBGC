@@ -11,7 +11,7 @@ if (!($_SESSION['tipo'] == 1 || $_SESSION['tipo'] == 2)) {
 
 ?>
 
-<script src="js/consultarestoque.js"></script>
+<script src="js/requisicao.js"></script>
 
 <section class="home container" id="consultarEstoque">
 
@@ -24,7 +24,7 @@ if (!($_SESSION['tipo'] == 1 || $_SESSION['tipo'] == 2)) {
   </div>
   <div class="row">
   	<div class="col-sm-8 col-sm-offset-2">
-  		<form action="" method="" class="boxCadastro">
+  		<form action="webservice/requisicao.php" method="POST" class="boxCadastro">
   			<br>
 
   			<div class="row">
@@ -43,14 +43,15 @@ if (!($_SESSION['tipo'] == 1 || $_SESSION['tipo'] == 2)) {
 					<div class="col-sm-10 col-sm-offset-1">
 	  					<b>Selecionar Material</b>
 						<div class="row cabecalhoEstoque">
-						<div class="col-md-3">Material</div>
-						<div class="col-md-1">QTD</div>
+                        <div class="col-md-1">Cód.</div>
+						<div class="col-md-1">Qtd.</div>
 						<div class="col-md-3">Tipo</div>
 						<div class="col-md-1">Onda</div>
 						<div class="col-md-1">Gram.</div>
 						<div class="col-md-1">Comp.</div>
 						<div class="col-md-1">Larg.</div>
 						<div class="col-md-1">Selec.</div>
+                        <div class="col-md-1">Qtd.</div>
 						</div>
 	  				</div>
                     <div class="listaEstoque1 col-lg-10 col-lg-offset-1" id="chapasDePapelao">
@@ -73,15 +74,18 @@ if (!($_SESSION['tipo'] == 1 || $_SESSION['tipo'] == 2)) {
                                 foreach ($rows as $row) {
                                     echo "<li class=\"list-group-item\">
                                             <div class=\"row tipoMaterial\">
-                                                <div class=\"col-lg-3 \">Chapa de Papelão</div>
+                                                <div class=\"col-lg-1\">#$row[materiais_cod]</div>
                                                 <div class=\"col-lg-1\">$row[materiais_quantidade]</div>
                                                 <div class=\"col-lg-3\">$row[tipos_papelao_tipo]</div>
                                                 <div class=\"col-lg-1\">$row[tipos_onda_tipo]</div>
                                                 <div class=\"col-lg-1\">$row[chapas_gramatura]</div>
                                                 <div class=\"col-lg-1\">$row[chapas_comprimento]</div>
                                                 <div class=\"col-lg-1\">$row[chapas_largura]</div>
+                                                <div class=\"col-lg-1\">
+                                                    <input type=\"checkbox\" name=\"cod_selecionados[]\" value=\"$row[materiais_cod]\">
+                                                </div>
                                                 <div class=\"col-lg-1 tipoMaterialLast\">
-                                                    <input type=\"radio\" name=\"optionsRadios\">
+                                                    <input class=\"form-control quantidadeMaterial\" type=\"text\" name=\"quantidade[$row[materiais_cod]]\" value=\"\">
                                                 </div>
                                             </div>
                                         </li>";
@@ -100,10 +104,11 @@ if (!($_SESSION['tipo'] == 1 || $_SESSION['tipo'] == 2)) {
 					<div class="col-sm-10 col-sm-offset-1">
 	  					<b>Selecionar Material</b>
 						<div class="row cabecalhoEstoque">
-						<div class="col-md-3">Material</div>
-	                    <div class="col-md-1">QTD</div>
+                        <div class="col-md-1">Cód.</div>
+	                    <div class="col-md-1">Qtd.</div>
 	                    <div class="col-md-7">Descrição</div>
 						<div class="col-md-1">Selec.</div>
+                        <div class="col-md-1">Qtd.</div>
 						</div>
 	  				</div>
 
@@ -121,14 +126,14 @@ if (!($_SESSION['tipo'] == 1 || $_SESSION['tipo'] == 2)) {
                                 foreach ($rows as $row) {
                                     echo "<li class=\"list-group-item\">
                                             <div class=\"row tipoMaterial\">
-                                                <div class=\"col-lg-3 \">Material Sec.</div>
+                                                <div class=\"col-lg-1\">#$row[materiais_cod]</div>
                                                 <div class=\"col-lg-1\">$row[materiais_quantidade]</div>
                                                 <div class=\"col-lg-7\">$row[materiais_descricao]</div>
+                                                <div class=\"col-lg-1\">
+                                                    <input type=\"checkbox\" name=\"cod_selecionados[]\" value=\"$row[materiais_cod]\">
+                                                </div>
                                                 <div class=\"col-lg-1 tipoMaterialLast\">
-                                                    <a href=\"editarmaterial.php?id=$row[materiais_cod]\">
-                                                        <i class=\"fa fa-pencil\" aria-hidden=\"true\">
-                                                        </i>
-                                                    </a>
+                                                    <input class=\"form-control quantidadeMaterial\" type=\"text\" name=\"quantidade[$row[materiais_cod]]\" value=\"\">
                                                 </div>
                                             </div>
                                         </li>";
@@ -139,32 +144,43 @@ if (!($_SESSION['tipo'] == 1 || $_SESSION['tipo'] == 2)) {
                 </div>
             </div>
 			<div class="row">
-				<br>
-				<div class="col-md-2 col-md-offset-1">
-						<b>Quantidade:</b>
-				</div>
+				<br>				
 				<div class="col-md-5 col-md-offset-1">
-						<b>Adicionar Campo para Observação</b>
+				    Observação
+                    <input type="checkbox" name="add_campo_observacao" id="addCampoObservacao">
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-md-2 col-md-offset-1">
-						<input type="text" name="quantidade" class="form-control" placeholder="">
-				</div>
-
-				<div class="col-md-5 col-md-offset-2">
-					<label class="radio-inline">
-						<input type="radio" name="inlineRadioOptions" id="inlineRadio1"> Sim
-					</label>
-					<label class="radio-inline">
-						<input type="radio" name="inlineRadioOptions" id="inlineRadio2"> Não
-					</label>
+                <div class="col-sm-10 col-md-offset-1">
+                    <input class="form-control" type="text" name="observacao" id="observacao">
 				</div>
 			</div>
 			<div class="row">
 				<br>
 				<div class="col-sm-10 col-sm-offset-1">
-					<button type="submit" name="cadastrar" class="btn btn-cadastrarMaterial">Efetuar Requisição</button>
+					<button type="submit" name="requisitar" class="btn btn-cadastrarMaterial">Efetuar Requisição</button>
+				</div>
+			</div>
+
+            <br>
+			<div class="row">
+				<div class="col-sm-10 col-sm-offset-1">
+					<div class="modal fade" id="modalCadastroDialog">
+						<div class="modal-dialog">
+							<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="fecharDialog">×</button>
+								<h4 class="modal-title">Informação</h4>
+							</div>
+							<div class="modal-body">
+								<p><div id="modalCadastroMessage"></div></p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal" id="fecharDialog2">Close</button>
+							</div>
+							</div><!-- /.modal-content -->
+						</div><!-- /.modal-dialog -->
+					</div><!-- /.modal -->
 				</div>
 			</div>
   		<form>

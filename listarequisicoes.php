@@ -19,68 +19,34 @@ include 'header.php';
   			<div class="row">
                 <div class="col-sm-10 col-sm-offset-1">
                     <div class="row cabecalhoEstoque">
-                    <div class="col-md-5">Material</div>
-                    <div class="col-md-1">QTD</div>
-                    <div class="col-md-4">Cód.</div>
-                    <div class="col-md-2">Imprimir</div>
+                    <div class="col-md-1">Cód.</div>
+                    <div class="col-md-2">Data</div>                   
+                    <div class="col-md-1">Qtd.</div>                    
+                    <div class="col-md-7">Observação</div>
+                    <div class="col-sm-1">Impr.</div>
                     </div>
                 </div>
                 <div class="listaEstoque col-sm-9 col-sm-offset-1" id="chapasDePapelao">
-
-
                     <ul class="list-group">
+                    <?php
+                        $rows = db_select("SELECT cod_requisicao, cod_material, data, quantidade, observacao FROM requisicoes ORDER BY data");
 
-                        <li class="list-group-item">
-                            <div class="row tipoMaterial">
-                                <div class="col-sm-5">Chapa de Papelão</div>
-                                <div class="col-sm-1">200</div>
-                                <div class="col-sm-4">132738473</div>
-                                <div class="col-sm-2 tipoMaterialLast"> <a href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a> </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="row tipoMaterial">
-                                <div class="col-sm-5">Chapa de Papelão</div>
-                                <div class="col-sm-1">200</div>
-                                <div class="col-sm-4">132738473</div>
-                                <div class="col-sm-2 tipoMaterialLast"> <a href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a> </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="row tipoMaterial">
-                                <div class="col-sm-5">Cola</div>
-                                <div class="col-sm-1">2</div>
-                                <div class="col-sm-4">132738473</div>
-                                <div class="col-sm-2 tipoMaterialLast"> <a href="#"><i class="fa fa-pencil" aria-hidden="true"></i></a> </div>
-                            </div>
-                        </li>
-
-
-
-                      <li class="list-group-item">Second item</li>
-                      <li class="list-group-item">Third item</li>
-                      <li class="list-group-item">First item</li>
-                      <li class="list-group-item">Second item</li>
-                      <li class="list-group-item">Third item</li>
-                      <li class="list-group-item">First item</li>
-                      <li class="list-group-item">Second item</li>
-                      <li class="list-group-item">Third item</li>
-                      <li class="list-group-item">First item</li>
-                      <li class="list-group-item">Second item</li>
-                      <li class="list-group-item">Third item</li>
-                      <li class="list-group-item">First item</li>
-                      <li class="list-group-item">Second item</li>
-                      <li class="list-group-item">Third item</li>
-                      <li class="list-group-item">First item</li>
-                      <li class="list-group-item">Second item</li>
-                      <li class="list-group-item">Third item</li>
-                      <li class="list-group-item">Third item</li>
-                      <li class="list-group-item">First item</li>
-                      <li class="list-group-item">Second item</li>
-                      <li class="list-group-item">Third item</li>
-                      <li class="list-group-item">First item</li>
-                      <li class="list-group-item">Second item</li>
-                      <li class="list-group-item">Third item</li>
+                        foreach ($rows as $row) {
+                            echo "<li class=\"list-group-item\">
+                                    <div class=\"row tipoMaterial\">
+                                        <div class=\"col-md-1\">#$row[cod_requisicao]</div> 
+                                        <div class=\"col-md-2\">$row[data]</div>                                                                               
+                                        <div class=\"col-md-1\">$row[quantidade]</div>                                             
+                                        <div class=\"col-md-7\">" . ($row['observacao'] !== "" ? utf8_encode($row['observacao']) : "---") . "</div>
+                                        <div class=\"col-sm-1 tipoMaterialLast\">
+                                            <a href=\"impressaorequisicao.php?cod=$row[cod_requisicao]\">
+                                                <i class=\"fa fa-print\" aria-hidden=\"true\"></i>
+                                            </a>
+                                        </div>  
+                                    </div>
+                                </li>";
+                        }
+                    ?>                     
                     </ul>
                 </div>
   			</div>
