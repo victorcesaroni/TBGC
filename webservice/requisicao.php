@@ -41,13 +41,22 @@ function validar_quantidade($input, $cod_material) {
 }
 
 
-function inserir_requisicao($cod_material, $quantidade, $observacao) {
+function inserir_requisicao($cods, $quantidades, $observacao) {
     db_query("BEGIN");  
-    db_query("INSERT INTO requisicoes(quantidade, observacao, cod_material, data) VALUES ($quantidade, '$observacao', $cod_material, CURRENT_DATE)");
-    db_query("UPDATE materiais SET quantidade=(quantidade - $quantidade) WHERE cod=$cod_material");
+    db_query("INSERT INTO requisicoes(observacao, data) VALUES ('$observacao', CURRENT_DATE)");
+ 
+    $cod_requisicao = db_insert_id();
+
+    foreach ($cods as $cod_material) {
+        $quantidade = $quantidades[$cod_material];
+
+        db_query("INSERT INTO requisicoes_materiais(cod_requisicao, cod_material, quantidade) VALUES ($cod_requisicao, $cod_material, $quantidade)");
+        db_query("UPDATE materiais SET quantidade=(quantidade - $quantidade) WHERE cod=$cod_material");
+    }
+    
     db_query("COMMIT");
 
-    return true;
+    return $cod_requisicao;
 }
 
 
@@ -75,7 +84,7 @@ if (isset($_POST['requisitar'])) {
     if ($validado) {
         $cod_selecionados = $_POST['cod_selecionados'];
         $quantidades = $_POST['quantidade'];
-        $observacao = db_quote(isset($_POST['add_campo_observacao']) ? $_POST['observacao'] : "");
+        $observacao = utf8_encode(db_quote(isset($_POST['add_campo_observacao']) ? $_POST['observacao'] : ""));
 
         foreach ($cod_selecionados as $cod) {
             if (!validar_codigo($cod)) {
@@ -96,12 +105,8 @@ if (isset($_POST['requisitar'])) {
         }
 
         if ($validado) {
-            foreach ($cod_selecionados as $cod) {
-                $quantidade = $quantidades[$cod];
-                inserir_requisicao($cod, $quantidade, $observacao);
-
-                $response["message"] = "Requisição criada com sucesso!<br>" . $response["message"];
-            }          
+            $cod_requisicao = inserir_requisicao($cod_selecionados, $quantidades, $observacao);
+            $response["message"] = "Requisição #$cod_requisicao criada com sucesso!<br>" . $response["message"];      
         } else {
             $response["error"] = true;
         }
