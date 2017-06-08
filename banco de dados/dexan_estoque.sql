@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 29-Maio-2017 às 23:03
+-- Generation Time: 08-Jun-2017 às 21:44
 -- Versão do servidor: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -75,22 +75,22 @@ INSERT INTO `materiais` (`cod`, `quantidade`) VALUES
 (5, 0),
 (6, 0),
 (7, 25),
-(10, 18),
-(11, 29),
-(12, 111),
-(13, 35),
-(14, 100),
-(16, 2),
-(17, 457),
-(18, 457),
-(19, 457),
-(20, 50),
-(21, 50),
-(22, 50),
-(23, 50),
-(24, 50),
-(25, 50),
-(26, 50);
+(10, 16),
+(11, 0),
+(12, 81),
+(13, 33),
+(14, 87),
+(16, 1),
+(17, 417),
+(18, 401),
+(19, 435),
+(20, 37),
+(21, 39),
+(22, 12),
+(23, 22),
+(24, 36),
+(25, 49),
+(26, 46);
 
 -- --------------------------------------------------------
 
@@ -119,10 +119,8 @@ INSERT INTO `materiais_secundarios` (`cod_material`, `descricao`) VALUES
 --
 
 CREATE TABLE `requisicoes` (
-  `cod_requisicao` int(11) NOT NULL,
-  `cod_material` int(11) NOT NULL,
+  `cod` int(11) NOT NULL,
   `data` date NOT NULL,
-  `quantidade` int(11) NOT NULL,
   `observacao` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -130,10 +128,42 @@ CREATE TABLE `requisicoes` (
 -- Extraindo dados da tabela `requisicoes`
 --
 
-INSERT INTO `requisicoes` (`cod_requisicao`, `cod_material`, `data`, `quantidade`, `observacao`) VALUES
-(2, 5, '2017-05-29', 1, ''),
-(3, 6, '2017-05-29', 1, ''),
-(4, 11, '2017-05-29', 1, 'Observe se a chapa está lisa.');
+INSERT INTO `requisicoes` (`cod`, `data`, `observacao`) VALUES
+(23, '2017-06-08', 'NÃƒÂ£o amassar a chapa.'),
+(24, '2017-06-15', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `requisicoes_materiais`
+--
+
+CREATE TABLE `requisicoes_materiais` (
+  `cod_requisicao` int(11) NOT NULL,
+  `cod_material` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Extraindo dados da tabela `requisicoes_materiais`
+--
+
+INSERT INTO `requisicoes_materiais` (`cod_requisicao`, `cod_material`, `quantidade`) VALUES
+(23, 10, 1),
+(23, 12, 5),
+(23, 13, 1),
+(23, 14, 13),
+(23, 18, 1),
+(23, 19, 10),
+(23, 20, 2),
+(23, 22, 1),
+(23, 25, 1),
+(23, 26, 1),
+(24, 12, 12),
+(24, 18, 55),
+(24, 23, 13),
+(24, 24, 1),
+(24, 26, 3);
 
 -- --------------------------------------------------------
 
@@ -229,8 +259,14 @@ ALTER TABLE `materiais_secundarios`
 -- Indexes for table `requisicoes`
 --
 ALTER TABLE `requisicoes`
-  ADD PRIMARY KEY (`cod_requisicao`),
-  ADD KEY `cod_material` (`cod_material`) USING BTREE;
+  ADD PRIMARY KEY (`cod`);
+
+--
+-- Indexes for table `requisicoes_materiais`
+--
+ALTER TABLE `requisicoes_materiais`
+  ADD PRIMARY KEY (`cod_requisicao`,`cod_material`) USING BTREE,
+  ADD KEY `fk_cod_material_requisicoes` (`cod_material`);
 
 --
 -- Indexes for table `tipos_onda`
@@ -263,7 +299,7 @@ ALTER TABLE `materiais`
 -- AUTO_INCREMENT for table `requisicoes`
 --
 ALTER TABLE `requisicoes`
-  MODIFY `cod_requisicao` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `tipos_onda`
 --
@@ -298,10 +334,11 @@ ALTER TABLE `materiais_secundarios`
   ADD CONSTRAINT `fk_cod_material_matsec` FOREIGN KEY (`cod_material`) REFERENCES `materiais` (`cod`);
 
 --
--- Limitadores para a tabela `requisicoes`
+-- Limitadores para a tabela `requisicoes_materiais`
 --
-ALTER TABLE `requisicoes`
-  ADD CONSTRAINT `fk_cod_material_requisicoes` FOREIGN KEY (`cod_material`) REFERENCES `materiais` (`cod`);
+ALTER TABLE `requisicoes_materiais`
+  ADD CONSTRAINT `fk_cod_material_requisicoes` FOREIGN KEY (`cod_material`) REFERENCES `materiais` (`cod`),
+  ADD CONSTRAINT `fk_cod_requisicao` FOREIGN KEY (`cod_requisicao`) REFERENCES `requisicoes` (`cod`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
