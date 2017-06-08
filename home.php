@@ -22,7 +22,7 @@ if (!isset($_SESSION['logado'])) {
   </div>
   <div class="row">
     <div class="col-sm-4 col-sm-offset-4">
-        <hr class="divisor">
+
     </div>
   </div>
 </section>

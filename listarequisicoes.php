@@ -2,6 +2,15 @@
 include 'header.php';
 ?>
 
+<?php
+if (!isset($_SESSION['logado'])) {
+	 header('Location: index.php');
+}
+?>
+
+if (!($_SESSION['tipo'] == 1 || $_SESSION['tipo'] == 2)) {
+	sem_permissao();
+}
 
 <section class="home container" id="consultarEstoque">
 
@@ -19,7 +28,7 @@ include 'header.php';
   			<div class="row">
                 <div class="col-sm-10 col-sm-offset-1">
                     <div class="row cabecalhoEstoque">
-                    <div class="col-md-1">Cód.</div>
+                    <div class="col-md-1">Núm.</div>
                     <div class="col-md-2">Data</div>                                 
                     <div class="col-md-8">Observação</div>
                     <div class="col-sm-1">Impr.</div>
@@ -28,7 +37,7 @@ include 'header.php';
                 <div class="listaEstoque col-sm-9 col-sm-offset-1" id="chapasDePapelao">
                     <ul class="list-group">
                     <?php
-                        $rows = db_select("SELECT cod, date_format(data, '%d/%m/%Y') as data_fmt, observacao FROM requisicoes ORDER BY data");
+                        $rows = db_select("SELECT cod, date_format(data, '%d/%m/%Y') as data_fmt, observacao FROM requisicoes ORDER BY data desc");
 
                         foreach ($rows as $row) {
                             echo "<li class=\"list-group-item\">

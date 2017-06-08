@@ -5,9 +5,10 @@ if (!isset($_SESSION['logado'])) {
 	 header('Location: index.php');
 }
 
-if (!($_SESSION['tipo'] == 1 || $_SESSION['tipo'] == 2)) {
+if (!($_SESSION['tipo'] == 1)) {
 	sem_permissao();
 }
+
 
 ?>
 

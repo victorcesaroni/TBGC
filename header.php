@@ -31,6 +31,8 @@ if (isset($_SESSION['logado'])) {
 		<a href="cadastrarmaterial.php">Cadastrar Material</a>
 		<a href="consultarestoque.php">Consultar Estoque</a>
 		<a href="requisicao.php">Requisição de Material</a>
+		<a href="relatorio.php">Relatório Semanal</a>
+		<a href="listarequisicoes.php">Acessar Requisições</a>
 		<a href="webservice/logout.php">Sair</a>
 	<?php
 	} else if ($_SESSION['tipo'] == 2) {
