@@ -40,11 +40,19 @@ if (!($_SESSION['tipo'] == 1 || $_SESSION['tipo'] == 2)) {
                         $rows = db_select("SELECT cod, date_format(data, '%d/%m/%Y') as data_fmt, observacao FROM requisicoes ORDER BY data desc");
 
                         foreach ($rows as $row) {
+                            $observacao = ($row['observacao'] !== "" ? utf8_decode($row['observacao']) : "NC");                           
+
+                            if (strlen($observacao) > 46)
+                            {
+                                $observacao = substr($observacao, 0, 46);
+                                $observacao .= "...";
+                            }
+                            
                             echo "<li class=\"list-group-item\">
                                     <div class=\"row tipoMaterial\">
                                         <div class=\"col-md-1\">#$row[cod]</div> 
                                         <div class=\"col-md-2\">$row[data_fmt]</div>                                       
-                                        <div class=\"col-md-8\">" . ($row['observacao'] !== "" ? utf8_decode($row['observacao']) : "---") . "</div>
+                                        <div class=\"col-md-8\">" . $observacao . "</div>
                                         <div class=\"col-sm-1 tipoMaterialLast\">
                                             <a href=\"impressaorequisicao.php?cod=$row[cod]\">
                                                 <i class=\"fa fa-print\" aria-hidden=\"true\"></i>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 08-Jun-2017 às 21:44
+-- Generation Time: 19-Jun-2017 às 19:54
 -- Versão do servidor: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -75,22 +75,24 @@ INSERT INTO `materiais` (`cod`, `quantidade`) VALUES
 (5, 0),
 (6, 0),
 (7, 25),
-(10, 16),
-(11, 0),
+(10, 1076),
+(11, 2),
 (12, 81),
-(13, 33),
-(14, 87),
+(13, 18),
+(14, 37),
 (16, 1),
 (17, 417),
-(18, 401),
+(18, 381),
 (19, 435),
-(20, 37),
+(20, 2),
 (21, 39),
 (22, 12),
 (23, 22),
 (24, 36),
-(25, 49),
-(26, 46);
+(25, 4),
+(26, 6),
+(27, 1300),
+(28, 1320);
 
 -- --------------------------------------------------------
 
@@ -110,7 +112,9 @@ CREATE TABLE `materiais_secundarios` (
 INSERT INTO `materiais_secundarios` (`cod_material`, `descricao`) VALUES
 (10, 'GRAMPOS PARA PAPELÃƒO'),
 (12, 'FITA ADESIVA'),
-(13, 'COLA INDUSTRIAL');
+(13, 'COLA INDUSTRIAL'),
+(27, 'FOLHA SULFITE A4'),
+(28, 'GRAMPO 19MM');
 
 -- --------------------------------------------------------
 
@@ -129,8 +133,10 @@ CREATE TABLE `requisicoes` (
 --
 
 INSERT INTO `requisicoes` (`cod`, `data`, `observacao`) VALUES
-(23, '2017-06-08', 'NÃƒÂ£o amassar a chapa.'),
-(24, '2017-06-15', '');
+(28, '2017-06-19', 'Favor manter atenÃƒÂ§ÃƒÂ£o para possÃƒÂ­veis amassados nas chapas.'),
+(29, '2017-06-19', ''),
+(30, '2017-06-19', 'Folhas reservadas para impressÃƒÂ£o de requisiÃƒÂ§ÃƒÂµes'),
+(31, '2017-06-14', 'Favor nÃƒÂ£o reinserir sobras no estoque');
 
 -- --------------------------------------------------------
 
@@ -149,21 +155,17 @@ CREATE TABLE `requisicoes_materiais` (
 --
 
 INSERT INTO `requisicoes_materiais` (`cod_requisicao`, `cod_material`, `quantidade`) VALUES
-(23, 10, 1),
-(23, 12, 5),
-(23, 13, 1),
-(23, 14, 13),
-(23, 18, 1),
-(23, 19, 10),
-(23, 20, 2),
-(23, 22, 1),
-(23, 25, 1),
-(23, 26, 1),
-(24, 12, 12),
-(24, 18, 55),
-(24, 23, 13),
-(24, 24, 1),
-(24, 26, 3);
+(28, 10, 500),
+(28, 13, 10),
+(28, 25, 25),
+(28, 26, 40),
+(29, 11, 20),
+(29, 20, 35),
+(29, 28, 100),
+(30, 27, 200),
+(31, 13, 5),
+(31, 25, 20),
+(31, 28, 80);
 
 -- --------------------------------------------------------
 
@@ -294,12 +296,12 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT for table `materiais`
 --
 ALTER TABLE `materiais`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `requisicoes`
 --
 ALTER TABLE `requisicoes`
-  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `cod` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `tipos_onda`
 --

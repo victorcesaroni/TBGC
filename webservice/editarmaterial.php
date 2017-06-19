@@ -162,7 +162,7 @@ $response['message'] = "";
 if (isset($_POST['editar'])) {
     $validado = true;
     $first = true;
-   
+
     if (!(isset($_POST['cod_material']) && validar_cod_material($_POST['cod_material']))) {
         if ($first) { $first = false; } else { $response['message'] .= "<br>"; }
         $validado = false;
@@ -253,6 +253,10 @@ if (isset($_POST['editar'])) {
                 $response['message'] = "ERRO FATAL: Material não foi editado";
             }
         }
+    }
+    else
+    {
+        $response['message'] .= "Tipo do material inválido.";
     }
 }
 

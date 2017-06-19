@@ -147,10 +147,12 @@ if ($chapa) {
 			<div class="row">
 				<div class="col-sm-10 col-sm-offset-1">
 					Material
-					<select name="tipo_material" class="form-control" id="tipoMaterial" disabled>
+					<select name="tipo_material" class="form-control" id="tipoMaterial" readonly>
 						<?php if ($chapa) { ?>
+							
 							<option value="chapa">Chapa de papelão</option>
 						<?php } if ($secundario) { ?>
+
 							<option value="secundario">Secundário</option>
 						<?php } ?>
 					</select>
@@ -158,7 +160,7 @@ if ($chapa) {
 			</div>
 
 			<?php if ($chapa) { ?>
-
+			
 				<div class="row">
 					<div class="col-sm-3 col-sm-offset-1">
 						Quantidade
@@ -209,7 +211,7 @@ if ($chapa) {
 			<?php }?>
 
 			<input type="hidden" name="cod_material" value="<?php echo $cod_material; ?>">
-
+			
 			<div class="row">
 				<div class="col-sm-10 col-sm-offset-1">
 					<button type="submit" name="editar" class="btn btn-cadastrarMaterial">Atualizar</button>
